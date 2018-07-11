@@ -4,19 +4,19 @@ A simple Language Understanding (LUIS) bot for the Microsoft Bot Framework.
 
 var restify = require('restify');
 var builder = require('botbuilder');
-var botbuilder_azure = require("botbuilder-azure");
+var botbuilder_azure = require('botbuilder-azure');
 
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
+    console.log('%s listening to %s', server.name, server.url);
 });
-  
+
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
     appId: process.env.MicrosoftAppId,
     appPassword: process.env.MicrosoftAppPassword,
-    openIdMetadata: process.env.BotOpenIdMetadata 
+    openIdMetadata: process.env.BotOpenIdMetadata
 });
 
 // Listen for messages from users 
@@ -56,12 +56,13 @@ bot.recognizer(recognizer);
 // See https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-recognize-intent-luis 
 bot.dialog('GreetingDialog',
     (session) => {
-        session.send('You reached the Greeting intent. You said \'%s\'.', session.message.text);
+        session.send(`You reached the Greeting intent. You said \'%s\.
+        Hi!`, session.message.text);
         session.endDialog();
     }
 ).triggerAction({
     matches: 'Greeting'
-})
+});
 
 bot.dialog('HelpDialog',
     (session) => {
@@ -70,7 +71,7 @@ bot.dialog('HelpDialog',
     }
 ).triggerAction({
     matches: 'Help'
-})
+});
 
 bot.dialog('CancelDialog',
     (session) => {
@@ -79,5 +80,5 @@ bot.dialog('CancelDialog',
     }
 ).triggerAction({
     matches: 'Cancel'
-})
+});
 
